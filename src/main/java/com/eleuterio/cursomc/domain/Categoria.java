@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -19,6 +21,15 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 	
+	/**
+	 * Erro de Serializacao clica de Ojetos.
+	 * A categoria esta buscando uma lista de Ojetos, que por sua vez busca a categoria a qual ele
+	 * esta associado, e a categoria busca a lista de produtos relacionadas a ela causando um Loop.
+	 * Usamos a anotacao @JsonManagedReference no lado que desejamos que venha os objetos associados.
+	 * No outro lado, utilizamos @JsonBackReferences na lista de Categorias
+	 */
+	@JsonManagedReference	//Para quebrar o clico de serializacao dos objetos na forma de Loop, 
+			//	onde uma categoria busca um produto, que busca uma categoria, que busca um produto.....
 	/**
 	 * Mapeamento Muitos para Muitos
 	 * O Mapeamento já foi realizado no lado de produtos.

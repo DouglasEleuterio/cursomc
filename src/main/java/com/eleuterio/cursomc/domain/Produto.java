@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Produto implements Serializable {
 
@@ -31,6 +33,7 @@ public class Produto implements Serializable {
 	 * Nome da Coluna da Chave estrangeira de produto = produto_id
 	 * Nome da Coluna da Chave estrangeira de Categoria = categoria_id
 	 */
+	@JsonBackReference //Informando que o outro lado da associacao esta controlando o ciclo para nao ocorrer Loop.
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA", // Tabela que fara a tabela do meio de Muitos no banco
 			joinColumns = @JoinColumn(name = "produto_id"), // Chave Estrangeira do Id na tabela produto.
